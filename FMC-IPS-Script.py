@@ -230,7 +230,7 @@ choiceyesno=query_yes_no("did you choose the right Intrusion Policie?")
 ###print('=================================================================================================')
 ###print('=================================================================================================')
 ###print('=================================================================================================')
-###choiceyesno=query_yes_no("did you choose the right Intrusion Policie?")
+###choiceyesno=query_yes_no("did you choose the right Malware Policy?")
 
 
 
@@ -309,31 +309,32 @@ if choiceyesno == 1:
   items = None
   items2 = None
   items3 = None
-  with open('rules6.text', 'w') as target3:
+  ##with open('rules6.text', 'w') as target3:
 
-    for i in range(3):
+  for i in range(3):
      offsetStr = "?offset=%d&limit=1000" % (i*1000)
      url = url_start + ipaddr + api_path + offsetStr;
      r3 = requests.get(url, headers=headers, verify=False)
      status_code = r3.status_code
      resp = r3.text
      numcount=1
-     with open('rules2.text', 'w') as target2:
-      target2.write(resp)
+     ##with open('rules2.text', 'w') as target2:
+      ##target2.write(resp)
      if (status_code == 200):
           if (i==0):
            items = json.loads(resp)
+         ##  target2.write(resp)
           if (i==1):
            json_resp2= json.loads(resp)
            items2 = json.loads(resp)
-           target3.write("%s\n" % items2)
+        ##   target3.write("%s\n" % items2)
           if (i==2):
            items3 = json.loads(resp)
 
      else:
            r3.raise_for_status()
            print("Error occurred in --> "+resp)
-  target3.close()
+  ##target3.close()
  except requests.exceptions.HTTPError as err:
      print ("Error in connection --> "+str(err))
  finally:
@@ -370,7 +371,7 @@ if choiceyesno == 1:
 #############################################################################################
 
  for i in range(len(items["items"])):
-     if (rules_count == 240 ):
+     if (rules_count == 150 ):
       r = None
       headers = {'Content-Type': 'application/json'}
       api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
@@ -386,7 +387,7 @@ if choiceyesno == 1:
         print ("Error in generating Authentication Token --> "+str(err))
         sys.exit()
       headers['X-auth-access-token']=auth_token
-     if (rules_count == 480):
+     if (rules_count == 300):
       r = None
       headers = {'Content-Type': 'application/json'}
       api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
@@ -402,7 +403,7 @@ if choiceyesno == 1:
         print ("Error in generating Authentication Token --> "+str(err))
         sys.exit()
       headers['X-auth-access-token']=auth_token
-     if (rules_count == 720):
+     if (rules_count == 450):
       r = None
       headers = {'Content-Type': 'application/json'}
       api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
@@ -418,7 +419,39 @@ if choiceyesno == 1:
         print ("Error in generating Authentication Token --> "+str(err))
         sys.exit()
       headers['X-auth-access-token']=auth_token
-     if (rules_count == 940):
+     if (rules_count == 600):
+      r = None
+      headers = {'Content-Type': 'application/json'}
+      api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
+      auth_url = url_start + ipaddr + api_auth_path
+      try:
+          r1 = requests.post(auth_url, headers=headers, auth=requests.auth.HTTPBasicAuth(user1,pass1), verify=False)
+          auth_headers = r1.headers
+          auth_token = auth_headers.get('X-auth-access-token', default=None)
+          if auth_token == None:
+           print("Authentication Token not found. Exiting...")
+           sys.exit()
+      except Exception as err:
+        print ("Error in generating Authentication Token --> "+str(err))
+        sys.exit()
+      headers['X-auth-access-token']=auth_token
+     if (rules_count == 750):
+      r = None
+      headers = {'Content-Type': 'application/json'}
+      api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
+      auth_url = url_start + ipaddr + api_auth_path
+      try:
+          r1 = requests.post(auth_url, headers=headers, auth=requests.auth.HTTPBasicAuth(user1,pass1), verify=False)
+          auth_headers = r1.headers
+          auth_token = auth_headers.get('X-auth-access-token', default=None)
+          if auth_token == None:
+           print("Authentication Token not found. Exiting...")
+           sys.exit()
+      except Exception as err:
+        print ("Error in generating Authentication Token --> "+str(err))
+        sys.exit()
+      headers['X-auth-access-token']=auth_token
+     if (rules_count == 900):
       r = None
       headers = {'Content-Type': 'application/json'}
       api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
@@ -492,12 +525,34 @@ if choiceyesno == 1:
   key = input('Press Any Key To Exit.')
   quit()
 
+
+
+ ####<<geting new Token from REST API and returns the headers>>########
+###############################################################################
+ r = None
+ headers = {'Content-Type': 'application/json'}
+ api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
+ auth_url = url_start + ipaddr + api_auth_path
+ try:
+    r1 = requests.post(auth_url, headers=headers, auth=requests.auth.HTTPBasicAuth(user1,pass1), verify=False)
+    auth_headers = r1.headers
+    auth_token = auth_headers.get('X-auth-access-token', default=None)
+    if auth_token == None:
+        print("Authentication Token not found. Exiting...")
+        sys.exit()
+ except Exception as err:
+    print ("Error in generating Authentication Token --> "+str(err))
+    sys.exit()
+
+ headers['X-auth-access-token']=auth_token
+##############################################################################
+
 ####<< For Loop for second 1000 accesspolicies to Get and Put the IPS & Logging on them >>####
 #############################################################################################
 
 
  for i in range(len(items2["items"])):
-     if (rules_count == 240 ):
+     if (rules_count == 1050 ):
       r = None
       headers = {'Content-Type': 'application/json'}
       api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
@@ -513,7 +568,7 @@ if choiceyesno == 1:
         print ("Error in generating Authentication Token --> "+str(err))
         sys.exit()
       headers['X-auth-access-token']=auth_token
-     if (rules_count == 480):
+     if (rules_count == 1200):
       r = None
       headers = {'Content-Type': 'application/json'}
       api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
@@ -529,7 +584,7 @@ if choiceyesno == 1:
         print ("Error in generating Authentication Token --> "+str(err))
         sys.exit()
       headers['X-auth-access-token']=auth_token
-     if (rules_count == 720):
+     if (rules_count == 1350):
       r = None
       headers = {'Content-Type': 'application/json'}
       api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
@@ -545,7 +600,55 @@ if choiceyesno == 1:
         print ("Error in generating Authentication Token --> "+str(err))
         sys.exit()
       headers['X-auth-access-token']=auth_token
-     if (rules_count == 940):
+     if (rules_count == 1500):
+      r = None
+      headers = {'Content-Type': 'application/json'}
+      api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
+      auth_url = url_start + ipaddr + api_auth_path
+      try:
+          r1 = requests.post(auth_url, headers=headers, auth=requests.auth.HTTPBasicAuth(user1,pass1), verify=False)
+          auth_headers = r1.headers
+          auth_token = auth_headers.get('X-auth-access-token', default=None)
+          if auth_token == None:
+           print("Authentication Token not found. Exiting...")
+           sys.exit()
+      except Exception as err:
+        print ("Error in generating Authentication Token --> "+str(err))
+        sys.exit()
+      headers['X-auth-access-token']=auth_token
+     if (rules_count == 1650):
+      r = None
+      headers = {'Content-Type': 'application/json'}
+      api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
+      auth_url = url_start + ipaddr + api_auth_path
+      try:
+          r1 = requests.post(auth_url, headers=headers, auth=requests.auth.HTTPBasicAuth(user1,pass1), verify=False)
+          auth_headers = r1.headers
+          auth_token = auth_headers.get('X-auth-access-token', default=None)
+          if auth_token == None:
+           print("Authentication Token not found. Exiting...")
+           sys.exit()
+      except Exception as err:
+        print ("Error in generating Authentication Token --> "+str(err))
+        sys.exit()
+      headers['X-auth-access-token']=auth_token
+     if (rules_count == 1800):
+      r = None
+      headers = {'Content-Type': 'application/json'}
+      api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
+      auth_url = url_start + ipaddr + api_auth_path
+      try:
+          r1 = requests.post(auth_url, headers=headers, auth=requests.auth.HTTPBasicAuth(user1,pass1), verify=False)
+          auth_headers = r1.headers
+          auth_token = auth_headers.get('X-auth-access-token', default=None)
+          if auth_token == None:
+           print("Authentication Token not found. Exiting...")
+           sys.exit()
+      except Exception as err:
+        print ("Error in generating Authentication Token --> "+str(err))
+        sys.exit()
+      headers['X-auth-access-token']=auth_token
+     if (rules_count == 1950):
       r = None
       headers = {'Content-Type': 'application/json'}
       api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
@@ -619,11 +722,32 @@ if choiceyesno == 1:
   key = input('Press Any Key To Exit.')
   quit()
 
+ ####<<geting new Token from REST API and returns the headers>>########
+###############################################################################
+ r = None
+ headers = {'Content-Type': 'application/json'}
+ api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
+ auth_url = url_start + ipaddr + api_auth_path
+ try:
+    r1 = requests.post(auth_url, headers=headers, auth=requests.auth.HTTPBasicAuth(user1,pass1), verify=False)
+    auth_headers = r1.headers
+    auth_token = auth_headers.get('X-auth-access-token', default=None)
+    if auth_token == None:
+        print("Authentication Token not found. Exiting...")
+        sys.exit()
+ except Exception as err:
+    print ("Error in generating Authentication Token --> "+str(err))
+    sys.exit()
+
+ headers['X-auth-access-token']=auth_token
+##############################################################################
+
+
 ####<< For Loop for third 1000 accesspolicies to Get and Put the IPS & Logging on them >>####
 #############################################################################################
 
  for i in range(len(items3["items"])):
-     if (rules_count == 240 ):
+     if (rules_count == 2100 ):
       r = None
       headers = {'Content-Type': 'application/json'}
       api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
@@ -639,7 +763,7 @@ if choiceyesno == 1:
         print ("Error in generating Authentication Token --> "+str(err))
         sys.exit()
       headers['X-auth-access-token']=auth_token
-     if (rules_count == 480):
+     if (rules_count == 2250):
       r = None
       headers = {'Content-Type': 'application/json'}
       api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
@@ -655,7 +779,7 @@ if choiceyesno == 1:
         print ("Error in generating Authentication Token --> "+str(err))
         sys.exit()
       headers['X-auth-access-token']=auth_token
-     if (rules_count == 720):
+     if (rules_count == 2400):
       r = None
       headers = {'Content-Type': 'application/json'}
       api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
@@ -671,7 +795,39 @@ if choiceyesno == 1:
         print ("Error in generating Authentication Token --> "+str(err))
         sys.exit()
       headers['X-auth-access-token']=auth_token
-     if (rules_count == 940):
+     if (rules_count == 2550):
+      r = None
+      headers = {'Content-Type': 'application/json'}
+      api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
+      auth_url = url_start + ipaddr + api_auth_path
+      try:
+          r1 = requests.post(auth_url, headers=headers, auth=requests.auth.HTTPBasicAuth(user1,pass1), verify=False)
+          auth_headers = r1.headers
+          auth_token = auth_headers.get('X-auth-access-token', default=None)
+          if auth_token == None:
+           print("Authentication Token not found. Exiting...")
+           sys.exit()
+      except Exception as err:
+        print ("Error in generating Authentication Token --> "+str(err))
+        sys.exit()
+      headers['X-auth-access-token']=auth_token
+     if (rules_count == 2700):
+      r = None
+      headers = {'Content-Type': 'application/json'}
+      api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
+      auth_url = url_start + ipaddr + api_auth_path
+      try:
+          r1 = requests.post(auth_url, headers=headers, auth=requests.auth.HTTPBasicAuth(user1,pass1), verify=False)
+          auth_headers = r1.headers
+          auth_token = auth_headers.get('X-auth-access-token', default=None)
+          if auth_token == None:
+           print("Authentication Token not found. Exiting...")
+           sys.exit()
+      except Exception as err:
+        print ("Error in generating Authentication Token --> "+str(err))
+        sys.exit()
+      headers['X-auth-access-token']=auth_token
+     if (rules_count == 2850):
       r = None
       headers = {'Content-Type': 'application/json'}
       api_auth_path = "/api/fmc_platform/v1/auth/generatetoken"
@@ -762,11 +918,3 @@ print("Thank you for using this Script, Bye!")
 
 key = input('Press Any Key To Exit.')
 quit()
-
-
-
-
-
-
-
-
